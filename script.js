@@ -1,4 +1,4 @@
-const rooms = [
+const demoRooms = [
   {name:"Survival World",id:"MC-48291",players:3,max:10,version:"1.20.1",loader:"Forge",icon:"▧"},
   {name:"Creative Friends",id:"MC-72915",players:2,max:8,version:"1.20.1",loader:"Forge",icon:"✦"},
   {name:"Vanilla+ Adventure",id:"MC-11804",players:5,max:12,version:"1.21.1",loader:"NeoForge",icon:"◇"},
@@ -100,3 +100,48 @@ document.addEventListener("mousemove",event=>{
   card.style.setProperty("--mx",`${event.clientX-r.left}px`);
   card.style.setProperty("--my",`${event.clientY-r.top}px`);
 });
+
+// API integration: use live rooms when configured; otherwise demo content.
+async function loadRoomsFromApi(){
+  const rawApiBase=(window.MULTIPLAYER_HUB_API||"").trim();
+  const apiBase=rawApiBase.endsWith("/")?rawApiBase.slice(0,-1):rawApiBase;
+  if(!apiBase){renderRooms();return;}
+  try{
+    const response=await fetch(`${apiBase}/api/v1/rooms`,{headers:{Accept:"application/json"}});
+    if(!response.ok)throw new Error(`API HTTP ${response.status}`);
+    const payload=await response.json();
+    if(!Array.isArray(payload.rooms))throw new Error("Unexpected API response");
+    rooms=payload.rooms.map(room=>({
+      name:room.name,
+      id:room.id,
+      players:Number(room.players_online||0),
+      max:Number(room.player_limit||0),
+      version:room.minecraft_version,
+      loader:room.loader,
+      icon:room.icon||"◇",
+      status:room.status||"online"
+    }));
+    renderRooms();
+  }catch(error){
+    console.warn("Multiplayer Hub API unavailable; showing demo rooms.",error);
+    rooms=[...demoRooms];
+    renderRooms();
+  }
+}
+loadRoomsFromApi();
+
+// Scroll-driven atmosphere: top is greener; deeper sections become cooler/darker.
+let scrollTick=false;
+function updateScrollAtmosphere(){
+  const maxScroll=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+  const progress=Math.min(1,window.scrollY/maxScroll);
+  document.documentElement.style.setProperty("--scroll-progress",progress.toFixed(3));
+  document.documentElement.style.setProperty("--green-glow-opacity",(0.20*(1-progress)).toFixed(3));
+  document.documentElement.style.setProperty("--blue-glow-opacity",(0.05+0.12*progress).toFixed(3));
+  document.documentElement.style.setProperty("--page-darkness",(0.04+0.13*progress).toFixed(3));
+  scrollTick=false;
+}
+window.addEventListener("scroll",()=>{
+  if(!scrollTick){requestAnimationFrame(updateScrollAtmosphere);scrollTick=true;}
+},{passive:true});
+updateScrollAtmosphere();

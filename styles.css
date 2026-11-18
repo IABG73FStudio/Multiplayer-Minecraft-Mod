@@ -47,3 +47,12 @@ body{isolation:isolate}
 @keyframes halo-pulse{0%,100%{opacity:.35;scale:.96}50%{opacity:.75;scale:1.04}}
 @keyframes soft-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+
+/* Scroll-reactive color grading */
+:root{--scroll-progress:0;--green-glow-opacity:.20;--blue-glow-opacity:.05;--page-darkness:.04}
+.ambient-bg{background:linear-gradient(rgba(4,7,10,var(--page-darkness)),rgba(4,7,10,var(--page-darkness)))}
+.glow-a{opacity:var(--green-glow-opacity)}
+.glow-b{opacity:var(--blue-glow-opacity)}
+.glow-c{opacity:calc(.10 + .04 * var(--scroll-progress))}
+.hero,.rooms-section,.download-section,.how-section{position:relative}
+.rooms-section:before,.download-section:before,.how-section:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 15% 20%,#111d27aa,transparent 55%);opacity:calc(.20 + .45 * var(--scroll-progress));z-index:-1}
