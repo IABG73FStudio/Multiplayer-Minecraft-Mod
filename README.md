@@ -1,17 +1,18 @@
-# Multiplayer Hub
+# Multiplayer Hub API — starter
 
-Статический сайт для проекта Minecraft Multiplayer Hub.
+## Run locally
+1. Install Node.js (LTS).
+2. In this folder run `npm install`.
+3. Run `npm run dev`.
+4. Test `http://localhost:3000/api/v1/health`.
+5. Rooms: `http://localhost:3000/api/v1/rooms`.
 
-## Локальный запуск
-Просто открой `index.html` в браузере. Для локального сервера можно использовать расширение Live Server в VS Code.
+## Endpoints
+- `GET /api/v1/health` — service status
+- `GET /api/v1/rooms` — public room list (`q`, `version`, `loader` filters)
+- `GET /api/v1/rooms/:id` — public room details
+- `POST /api/v1/rooms` — reserved; currently returns 501
 
-## Публикация на GitHub Pages
-1. Создай репозиторий GitHub, например `multiplayer-hub`.
-2. Загрузи `index.html`, `styles.css`, `script.js` в корень репозитория.
-3. Открой **Settings → Pages**.
-4. В разделе Build and deployment выбери **Deploy from a branch**.
-5. Выбери ветку `main` и папку `/ (root)`, нажми Save.
-6. Через некоторое время GitHub покажет URL сайта.
+Public room data never contains passwords or private host addresses.
 
-## Важно
-Сейчас каталог содержит демонстрационные записи. Они не являются реальными комнатами; пароли не отображаются. Реальный каталог позже подключим к API.
+This is a development skeleton only: room data is in memory and resets when the server restarts. Before connecting the Minecraft mod or exposing publicly, add authentication, validation, rate limiting, persistent database, host heartbeat, room ownership and security.
