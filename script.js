@@ -65,3 +65,38 @@ document.addEventListener("keydown",event=>{
 });
 document.getElementById("year").textContent=new Date().getFullYear();
 renderRooms();
+
+// Ambient particles (decorative only)
+const particleLayer=document.getElementById("particles");
+if(particleLayer){
+  for(let i=0;i<38;i++){
+    const p=document.createElement("span");
+    p.className="particle";
+    p.style.left=(Math.random()*100)+"%";
+    p.style.top=(Math.random()*100)+"%";
+    p.style.setProperty("--duration",(12+Math.random()*20)+"s");
+    p.style.setProperty("--delay",(-Math.random()*28)+"s");
+    p.style.opacity=(.15+Math.random()*.4);
+    particleLayer.appendChild(p);
+  }
+}
+// Gentle parallax tilt for cube illustration
+const art=document.querySelector(".hero-art");
+const cubeScene=document.querySelector(".cube-scene");
+if(art&&cubeScene&&window.matchMedia("(prefers-reduced-motion: no-preference)").matches){
+  art.addEventListener("mousemove",event=>{
+    const rect=art.getBoundingClientRect();
+    const x=(event.clientX-rect.left)/rect.width-.5;
+    const y=(event.clientY-rect.top)/rect.height-.5;
+    cubeScene.style.transform=`rotate(-25deg) translateY(-5px) rotateX(${(-y*10).toFixed(1)}deg) rotateY(${(x*12).toFixed(1)}deg)`;
+  });
+  art.addEventListener("mouseleave",()=>cubeScene.style.transform="");
+}
+// Highlight room cards toward cursor
+document.addEventListener("mousemove",event=>{
+  const card=event.target.closest?.(".room-card");
+  if(!card)return;
+  const r=card.getBoundingClientRect();
+  card.style.setProperty("--mx",`${event.clientX-r.left}px`);
+  card.style.setProperty("--my",`${event.clientY-r.top}px`);
+});
