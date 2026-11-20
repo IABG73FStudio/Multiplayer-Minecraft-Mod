@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multiplayer Hub</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient"></div><header class="topbar">
+    <a class="brand" href="index.html"><span class="cube">◆</span> Multiplayer Hub</a>
+    <nav><a href="#rooms">Комнаты</a><a href="skins.html">Скины</a><a href="coins.html">Монеты</a><a href="api-keys.html">API Keys</a></nav>
+    <div class="account"><span id="balance">0 MC</span><a href="profile.html" id="user-link">Профиль</a></div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">YOUR WORLD. YOUR RULES.</div>
+      <h1>Твой мир.<br><span>Твои правила.</span></h1>
+      <p>Создавай комнаты, играй с друзьями и собирай собственную коллекцию скинов.</p>
+      <div class="actions"><a class="btn primary" href="#rooms">Найти комнату</a><a class="btn ghost" href="skins.html">Открыть гардероб</a></div>
+      <div class="stats"><div><b>24/7</b><small>Идея постоянных комнат</small></div><div><b>MC</b><small>Внутренняя валюта</small></div><div><b>OWN</b><small>Своя система скинов</small></div></div>
+    </section>
+    <section id="rooms" class="section">
+      <div class="section-head"><div><div class="eyebrow">DISCOVER</div><h2>Публичные комнаты</h2></div><input id="room-search" placeholder="Поиск по названию или ID"></div>
+      <div id="rooms-list" class="room-grid"><div class="panel">Загружаем комнаты…</div></div>
+    </section>
+    <section class="section feature-grid">
+      <a class="feature panel" href="skins.html"><span>🎨</span><h3>Свои скины</h3><p>Загружай PNG, собирай гардероб и выбирай внешний вид.</p></a>
+      <a class="feature panel" href="coins.html"><span>🪙</span><h3>Multiplayer Coins</h3><p>Получай ежедневные награды и трать монеты в магазине.</p></a>
+      <a class="feature panel" href="api-keys.html"><span>🔑</span><h3>API Manager</h3><p>Создавай и отзывай собственные API-ключи.</p></a>
+    </section>
+  </main>
+  <footer>Multiplayer Hub · Community multiplayer platform</footer>
+  <script src="config.js"></script><script src="app.js"></script>
+</body></html>
